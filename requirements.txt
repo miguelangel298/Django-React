@@ -1,0 +1,4 @@
+django
+django-webpack-loader
+djurl
+mysqlclient 
