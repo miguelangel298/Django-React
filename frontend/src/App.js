@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 // import './App.css';
-import {Navbar, NavItem} from 'react-materialize'
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { Route, Switch, BrowserRouter as Router, Link } from 'react-router-dom';
 
+import Inicio from './componets/Inicio.js';
 import Books from './componets/Books.js';
 class App extends Component {
   render() {
@@ -12,20 +11,26 @@ class App extends Component {
       <Router basename="/">
         <Route render={({ location }) => (
           <div className="" >
-            <Navbar  brand='logo' right>
-              <div className="container-fluid" >
-                <NavItem onClick={() => console.log('test click')}>Getting started</NavItem>
-                <NavItem href='components.html'>Components</NavItem>
+            <nav>
+              <div className="nav-wrapper">
+                <a className="brand-logo"> LOGO </a>
+                <a href="#" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
+                <ul id="nav-mobile" className="right hide-on-med-and-down">
+                  <li><Link to="/">Inicio</Link></li>
+                  <li><Link to="/books">Libros</Link></li>
+                  <li><a href="collapsible.html">JavaScript</a></li>
+                </ul>
               </div>
-            </Navbar>
+            </nav>
+
             <div className="container">
             </div>
               <TransitionGroup className="container-fluid">
               <CSSTransition key={location.key} classNames="fade"
             timeout={{ enter: 500, exit: 1 }}>
                 <Switch location={location}>
+                  <Route path="/" exact component={Inicio} />
                   <Route path="/books" exact component={Books} />
-
                 </Switch>
               </CSSTransition>
             </TransitionGroup>
