@@ -4,7 +4,7 @@ from . import views
 
 
 urlpatterns = [
-    url('books/', views.books),
-    url('book/:id/', views.bookdetail),
-    url('book/:id/:page/:format/', views.bookpage),
+    url('api/books/', views.books),
+    url('api/book/:id/', views.bookdetail),
+    url('api/book/:id/:page/:format/', views.bookpage),
 ]
