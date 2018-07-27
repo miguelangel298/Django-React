@@ -13,16 +13,17 @@ export const getAvailablePost = () => {
     Axios.post('api/books/')
       .then((response) => {
         dispatch({
-          type:RECOVERY_SUCCESS,
+          type: RECOVERY_SUCCESS,
           payload: response.data,
         });
         resolve(response.data);
       }).catch((err) => {
         dispatch({
-            type: RECOVERY_FAILED,
-            payload: err,
+          type: RECOVERY_FAILED,
+          payload: err,
         });
         reject(err);
       });
-    });
+  });
 }
+

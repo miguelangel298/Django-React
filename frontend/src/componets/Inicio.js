@@ -10,10 +10,10 @@ class Inicio extends Component {
       <div className="container">
         <div className="section">
         <div className="row">
-         <div className="col s6 m6">
+         <div className="col s4 m4">
            <div className="card">
              <div className="card-image">
-               <img src={CoverPage} alt="log" />
+               <img width="50" height="250" src={CoverPage} alt="log" />
                <span className="card-title">Card Title</span>
                <a className="btn-floating halfway-fab waves-effect waves-light red"><i className="material-icons">add</i></a>
              </div>
@@ -22,7 +22,7 @@ class Inicio extends Component {
              </div>
            </div>
          </div>
-         <div className="col s6 m6">
+         <div className="col s4 m4">
            <div className="card">
              <div className="card-image">
                <img src={CoverPage} alt="log" />
