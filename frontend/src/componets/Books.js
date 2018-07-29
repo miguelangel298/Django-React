@@ -6,8 +6,10 @@ class Books extends Component {
 
   render() {
     return (
-      <div className="logo-container">
-        <Link to="/"><img src={logo} alt="log" className="App-logo my-5"/></Link>
+      <div className="section">
+        <div className="logo-container">
+          <Link to="/"><img src={logo} alt="log" className="App-logo my-5"/></Link>
+        </div>
       </div>
     );
   }

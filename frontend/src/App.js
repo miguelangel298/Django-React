@@ -4,7 +4,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { Route, Switch, BrowserRouter as Router, Link } from 'react-router-dom';
 
 import Inicio from './componets/Inicio.js';
-import Books from './componets/Books.js';
+import Publish from './componets/Publish.js';
 class App extends Component {
   render() {
     return (
@@ -14,15 +14,17 @@ class App extends Component {
             <nav>
               <div className="nav-wrapper">
                 <a className="brand-logo"> LOGO </a>
-                <a href="#" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
-                <ul id="nav-mobile" className="right hide-on-med-and-down">
-                  <li><Link to="/">Inicio</Link></li>
-                  <li><Link to="/books">Libros</Link></li>
-                  <li><a href="collapsible.html">JavaScript</a></li>
+                <Link to="/" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></Link>
+                <ul id=" nav-mobile" className="right hide-on-med-and-down">
+                  <li><Link to="/">Home</Link></li>
+                  <li><Link to="/publish">Publish</Link></li>
                 </ul>
               </div>
             </nav>
-
+            <ul className="sidenav" id="mobile-demo">
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/publish">Publish</Link></li>
+            </ul>
             <div className="container">
             </div>
               <TransitionGroup className="container-fluid">
@@ -30,7 +32,7 @@ class App extends Component {
             timeout={{ enter: 500, exit: 1 }}>
                 <Switch location={location}>
                   <Route path="/" exact component={Inicio} />
-                  <Route path="/books" exact component={Books} />
+                  <Route path="/publish" exact component={Publish} />
                 </Switch>
               </CSSTransition>
             </TransitionGroup>
