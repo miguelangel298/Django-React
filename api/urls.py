@@ -7,4 +7,5 @@ urlpatterns = [
     url('api/books/', views.books),
     url('api/book/:id/', views.bookdetail),
     url('api/book/:id/:page/:format/', views.bookpage),
+
 ]
