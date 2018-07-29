@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
-import { getAvailablePost } from '../actions/recoveryActions.js';
+import { newBook } from '../actions/recoveryActions.js';
 
 class Publish extends Component {
   constructor(props) {
@@ -24,7 +24,11 @@ class Publish extends Component {
     this.setState({ [name]: value });
   }
   onGetDate(ev) {
-    console.log(this.state);
+    console.log(ev);
+    
+    newBook(this.state).then((response) => {
+      console.log(response);
+    });
   }
   render() {
     const { bookName, content, author, category, format } = this.state;
