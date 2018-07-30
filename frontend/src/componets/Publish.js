@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
-import { newBook } from '../actions/recoveryActions.js';
+import * as recoveryActions from '../actions/recoveryActions.js';
 
 class Publish extends Component {
   constructor(props) {
@@ -14,7 +14,7 @@ class Publish extends Component {
       format: '',
       content: '',
       valid: true
-    }
+    };
   }
 
   handleSubmit(ev) {
@@ -25,18 +25,16 @@ class Publish extends Component {
   }
   onGetDate(ev) {
     console.log(ev);
-    
-    newBook(this.state).then((response) => {
-      console.log(response);
-    });
+    recoveryActions.sendRecoveryEmail(this.state);
+    recoveryActions.getAvailablePost();
   }
   render() {
+    const { loading, loaded } = this.props;
     const { bookName, content, author, category, format } = this.state;
 
     const enabled = (
       content.length > 0 && bookName.length > 0 &&
-      author.length > 0 && category.length > 0 &&
-      format.length > 0
+      author.length > 0
     );
 
     return (
@@ -57,23 +55,7 @@ class Publish extends Component {
                       <input value={this.state.author} placeholder="Author" id="author" onChange={this.handleSubmit.bind(this)} name="author" type="text" className="validate" />
                       <label htmlFor="author">Author</label>
                     </div>
-                    <div className="input-field col s6">
-                      <select name="category" value={this.state.category} onChange={this.handleSubmit.bind(this)}>
-                        <option value="" disabled selected>Select category</option>
-                        <option value="1">Stories</option>
-                        <option value="2">Science fiction</option>
-                        <option value="3">Novels</option>
-                      </select>
-                      <label htmlFor="author">Category</label>
-                    </div>
-                    <div className="input-field col s6">
-                      <select name="format" value={this.state.format} onChange={this.handleSubmit.bind(this)}>
-                        <option value="0">Select type of format</option>
-                        <option value="1">Html</option>
-                        <option value="2">Text-plain</option>
-                      </select>
-                      <label htmlFor="author">Format</label>
-                    </div>
+
                     <div className="input-field col s12">
                       <textarea id="content" name="content" value={this.state.content} onChange={this.handleSubmit.bind(this)} className="materialize-textarea"></textarea>
                       <label htmlFor="content">Content</label>
@@ -94,4 +76,17 @@ class Publish extends Component {
   }
 }
 
-export default withRouter((Publish));
+
+const mapStateToProps = (state, props) => {
+  return {
+    bookName: state.recovery.bookName,
+    valid: state.recovery.valid,
+    category: state.recovery.category,
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(recoveryActions, dispatch);
+}
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Publish));
+
