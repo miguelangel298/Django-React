@@ -27,3 +27,27 @@ export const getAvailablePost = () => {
   });
 }
 
+export const newBook = ( book ) => {
+  console.log(book);
+  return (dispatch) => new Promise((resolve, reject) => {
+    dispatch({
+      type: RECOVERY_REQUEST
+    });
+    
+    Axios.post('api/books/')
+      .then((response) => {
+        dispatch({
+          type: RECOVERY_SUCCESS,
+          payload: response.data
+        });
+        resolve(response.data);
+      }).catch((err) => {
+        dispatch({
+          type: RECOVERY_FAILED,
+          payload: err
+        });
+        reject(err);
+      });
+  });
+}
+
