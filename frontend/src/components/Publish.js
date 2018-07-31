@@ -24,18 +24,21 @@ class Publish extends Component {
     this.setState({ [name]: value });
   }
   onGetDate(ev) {
-    console.log(ev);
-    recoveryActions.sendRecoveryEmail(this.state);
-    recoveryActions.getAvailablePost();
+    const { newBook } = this.props;
+    console.log('klk');
+    // sendRecoveryEmail(this.state);
+    newBook();
   }
   render() {
-    const { loading, loaded } = this.props;
     const { bookName, content, author, category, format } = this.state;
 
     const enabled = (
       content.length > 0 && bookName.length > 0 &&
       author.length > 0
     );
+
+    const { errClass, errText } = this.state;
+    const { loading } = this.props;
 
     return (
       <div className="container">
@@ -62,10 +65,60 @@ class Publish extends Component {
                     </div>
                   </div>
                 </div>
+
                 <div className="card-action">
+                {
+                  loading && (
+                    <div className="preloader-wrapper small active">
+                      <div className="spinner-layer spinner-blue">
+                        <div className="circle-clipper left">
+                          <div className="circle"></div>
+                        </div><div className="gap-patch">
+                          <div className="circle"></div>
+                        </div><div className="circle-clipper right">
+                          <div className="circle"></div>
+                        </div>
+                      </div>
+
+                      <div className="spinner-layer spinner-red">
+                        <div className="circle-clipper left">
+                          <div className="circle"></div>
+                        </div><div className="gap-patch">
+                          <div className="circle"></div>
+                        </div><div className="circle-clipper right">
+                          <div className="circle"></div>
+                        </div>
+                      </div>
+
+                      <div className="spinner-layer spinner-yellow">
+                        <div className="circle-clipper left">
+                          <div className="circle"></div>
+                        </div><div className="gap-patch">
+                          <div className="circle"></div>
+                        </div><div className="circle-clipper right">
+                          <div className="circle"></div>
+                        </div>
+                      </div>
+
+                      <div className="spinner-layer spinner-green">
+                        <div className="circle-clipper left">
+                          <div className="circle"></div>
+                        </div><div className="gap-patch">
+                          <div className="circle"></div>
+                        </div><div className="circle-clipper right">
+                          <div className="circle"></div>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                }
+                { !loading &&
+                  (
                   <button disabled={!enabled} onClick={this.onGetDate.bind(this)} className="btn waves-effect waves-light" type="submit" >Submit
                     <i className="material-icons right">send</i>
                   </button>
+                    )
+                  }
                 </div>
               </div>
             </div>
@@ -79,9 +132,9 @@ class Publish extends Component {
 
 const mapStateToProps = (state, props) => {
   return {
-    bookName: state.recovery.bookName,
-    valid: state.recovery.valid,
-    category: state.recovery.category,
+    userStatus: state.recovery.userStatus,
+    loading: state.recovery.loading,
+    loaded: state.recovery.loaded,
   };
 }
 
@@ -89,4 +142,3 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(recoveryActions, dispatch);
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Publish));
-

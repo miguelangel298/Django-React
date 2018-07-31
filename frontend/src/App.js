@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
-// import './App.css';
+import './App.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import * as recoveryActions from './actions/recoveryActions.js';
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { Route, Switch, BrowserRouter as Router, Link } from 'react-router-dom';
-import * as recoveryActions from './actions/recoveryActions.js';
 
-import Inicio from './componets/Inicio.js';
-import Publish from './componets/Publish.js';
+import Inicio from './components/Inicio.js';
+import Error404 from './components/404.js';
+import Publish from './components/Publish.js';
+
 class App extends Component {
   componentDidMount() {
-
+    
   }
   render() {
     return (
@@ -39,6 +41,7 @@ class App extends Component {
                 <Switch location={location}>
                   <Route path="/" exact component={Inicio} />
                   <Route path="/publish" exact component={Publish} />
+                  <Route  exact component={Error404} />
                 </Switch>
               </CSSTransition>
             </TransitionGroup>
@@ -52,14 +55,16 @@ class App extends Component {
 
 const mapStateToProps = (state, props) => {
   return {
-    bookName: state.recovery.bookName,
-    valid: state.recovery.valid,
-    category: state.recovery.category,
+    loading: state.recovery.loading,
+    loaded: state.recovery.loaded,
+    email: state.recovery.email,
     err: state.recovery.err,
+    message: state.recovery.message,
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(recoveryActions, dispatch);
+    return bindActionCreators(recoveryActions, dispatch);
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(App);
