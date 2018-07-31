@@ -4,50 +4,32 @@ export const RECOVERY_REQUEST = 'RECOVERY_REQUEST';
 export const RECOVERY_SUCCESS = 'RECOVERY_SUCCESS';
 export const RECOVERY_FAILED = 'RECOVERY_FAILED';
 
+export const REGISTRY_BOOK_SUCCESS = 'REGISTRY_BOOK_SUCCESS';
+export const REGISTRY_BOOK_FAILED = 'REGISTRY_BOOK_FAILED';
 
-export const getAvailablePost = () => {
-  return (dispatch) => new Promise((resolve, reject) => {
+
+export const newBook = () => {
+  return (dispatch) => new Promise(function(resolve, reject) {
     dispatch({
       type: RECOVERY_REQUEST
     });
-    Axios.post('api/books/')
-      .then((response) => {
-        dispatch({
-          type: RECOVERY_SUCCESS,
-          payload: response.data,
-        });
-        resolve(response.data);
-      }).catch((err) => {
-        dispatch({
-          type: RECOVERY_FAILED,
-          payload: err,
-        });
-        reject(err);
+    Axios.post('/')
+    .then((response) => {
+      const data = response.data;
+      dispatch({
+        type: REGISTRY_BOOK_SUCCESS,
+        payload: {
+          ...data,
+        }
       });
-  });
-}
-
-export const newBook = ( book ) => {
-  console.log(book);
-  return (dispatch) => new Promise((resolve, reject) => {
-    dispatch({
-      type: RECOVERY_REQUEST
+      resolve();
+    }).catch((err) => {
+      console.log(err);
+      dispatch({
+        type: REGISTRY_BOOK_FAILED,
+        payload: err
+      });
+      reject();
     });
-    
-    Axios.post('api/books/')
-      .then((response) => {
-        dispatch({
-          type: RECOVERY_SUCCESS,
-          payload: response.data
-        });
-        resolve(response.data);
-      }).catch((err) => {
-        dispatch({
-          type: RECOVERY_FAILED,
-          payload: err
-        });
-        reject(err);
-      });
   });
 }
-

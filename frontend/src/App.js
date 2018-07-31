@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
-// import './App.css';
+import './App.css';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as recoveryActions from './actions/recoveryActions.js';
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { Route, Switch, BrowserRouter as Router, Link } from 'react-router-dom';
 
-import Inicio from './componets/Inicio.js';
-import Publish from './componets/Publish.js';
+import Inicio from './components/Inicio.js';
+import Error404 from './components/404.js';
+import Publish from './components/Publish.js';
+
 class App extends Component {
+  componentDidMount() {
+    
+  }
   render() {
     return (
       <Router basename="/">
@@ -22,17 +30,18 @@ class App extends Component {
               </div>
             </nav>
             <ul className="sidenav" id="mobile-demo">
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/publish">Publish</Link></li>
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/publish">Publish</Link></li>
             </ul>
             <div className="container">
             </div>
-              <TransitionGroup className="container-fluid">
+            <TransitionGroup className="container-fluid">
               <CSSTransition key={location.key} classNames="fade"
-            timeout={{ enter: 500, exit: 1 }}>
+                timeout={{ enter: 500, exit: 1 }}>
                 <Switch location={location}>
                   <Route path="/" exact component={Inicio} />
                   <Route path="/publish" exact component={Publish} />
+                  <Route  exact component={Error404} />
                 </Switch>
               </CSSTransition>
             </TransitionGroup>
@@ -44,4 +53,18 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state, props) => {
+  return {
+    loading: state.recovery.loading,
+    loaded: state.recovery.loaded,
+    email: state.recovery.email,
+    err: state.recovery.err,
+    message: state.recovery.message,
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators(recoveryActions, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
