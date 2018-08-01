@@ -18,17 +18,17 @@ class Book:
         return accion
 
     @staticmethod
-    def books():
+    def list_books():
         sp = 'GET_Books'
         result = StoreProc.execute_json(sp)
         return result
-    
+
     @staticmethod
     def details(id):
         sp = 'GET_BookByID'
         result = StoreProc.execute_json(sp, params = [('', id)])
         return result
-    
+
     @staticmethod
     def page(id, page, format):
         sp = 'GET_BookPage'
