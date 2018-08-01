@@ -8,13 +8,14 @@ export const REGISTRY_BOOK_SUCCESS = 'REGISTRY_BOOK_SUCCESS';
 export const REGISTRY_BOOK_FAILED = 'REGISTRY_BOOK_FAILED';
 
 
-export const newBook = () => {
-  return (dispatch) => new Promise(function(resolve, reject) {
+export const newBook = (book) => {
+  return (dispatch) => new Promise(function (resolve, reject) {
     dispatch({
       type: RECOVERY_REQUEST
     });
-    Axios.post('/')
-    .then((response) => {
+    Axios.post('/', {
+      book
+    }).then((response) => {
       const data = response.data;
       dispatch({
         type: REGISTRY_BOOK_SUCCESS,
