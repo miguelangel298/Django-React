@@ -7,9 +7,7 @@ from .utils.Book import Book
 
 def books(request):
     if request.method == 'GET':
-        return new_book()
-    elif request.method == 'POST':
-        return new_book()
+        return Book.list_books()
     return JsonResponse({'status': 1})
 
 def bookdetail(request, id):
